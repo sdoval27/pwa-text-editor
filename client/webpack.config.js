@@ -23,7 +23,11 @@ module.exports = () => {
         template: './index.html',
         title: 'Webpack Plugin',
       }),
-      new InjectManifest(),
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'src-sw.js',
+      }),
+
       new WebpackPwaManifest({
         name: 'PWA Text Editor',
         short_name: 'Text Editor',
