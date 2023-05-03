@@ -18,3 +18,23 @@ const pageCache = new CacheFirst({
     }),
   ],
 });
+ 
+//TODO: offlineFallback, registerRoute
+
+warmStrategyCache({
+  urls: ['/index.html', '/'],
+  strategy: pageCache,
+});
+
+registerRoute(
+  //asset caching, removes load on backend resources
+  ({ request }) => request.mode === 'navigate', pageCache);
+  new offlineFallback({
+    cacheName: 'asset-cache',
+    plugins:[
+      //plugin caches responses with these headers for a max-age of 30 days
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      })
+    ],
+  })
